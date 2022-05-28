@@ -1,27 +1,48 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Login from '../views/login'
+import Home from '../views/home'
+import axios from 'axios'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path:'/',
+    redirect:'/login'
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/home',
+    component: Home
   }
 ]
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.path === '/login') {
+    next();
+  } else {
+    if(to.path === '/home') {
+      let token = sessionStorage.getItem('token')
+      if(!token) {
+        next('/login');
+      }else {
+        next()
+      }
+    }
+  }
+})
+
+axios.interceptors.request.use(function(config) {
+  config.headers.Authoration = sessionStorage.getItem('token');
+  return config;
 })
 
 export default router
