@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/login'
 import Home from '../views/home'
-import axios from 'axios'
+// import UserInfo from '../components/userInfo.vue'
+import UserInfo from '../components/userInfo'
+import WelCome from '../components/welCome'
 
 Vue.use(VueRouter)
 
@@ -17,8 +19,19 @@ const routes = [
   },
   {
     path: '/home',
-    component: Home
-  }
+    component: Home,
+    redirect: '/welcome',
+    children: [
+      {
+        path: '/welCome',
+        component: WelCome
+      },
+      {
+        path: '/users',
+        component: UserInfo
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({
@@ -29,20 +42,15 @@ router.beforeEach((to, from, next) => {
   if(to.path === '/login') {
     next();
   } else {
-    if(to.path === '/home') {
       let token = sessionStorage.getItem('token')
       if(!token) {
         next('/login');
       }else {
         next()
-      }
-    }
+      }  
   }
 })
 
-axios.interceptors.request.use(function(config) {
-  config.headers.Authoration = sessionStorage.getItem('token');
-  return config;
-})
+
 
 export default router

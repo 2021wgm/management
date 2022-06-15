@@ -10,7 +10,7 @@
       <div class="form-box">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
           <el-form-item   prop="name">
-            <el-input v-model="ruleForm.name"  prefix-icon="iconfont icon-yonghu"></el-input>
+            <el-input v-model="ruleForm.username"  prefix-icon="iconfont icon-yonghu"></el-input>
           </el-form-item>
 
           <el-form-item   prop="password">
@@ -30,17 +30,17 @@
 <script>
 export default {
   data () {
-    var passwordRule = (rule, value, callBack) => {
-      if(!value)
-      return callback(new Error('请输⼊密码'));
-    }
+    // var passwordRule = (rule, value, callBack) => {
+    //   if(!value)
+    //   return callback(new Error('请输⼊密码'));
+    // }
     return {
       ruleForm: {
         username: '',
         password: ''
       },
       rules: {
-        name: [
+        username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
@@ -62,12 +62,21 @@ export default {
         // }catch(error) {
         //   console.log(error);
         // }
-        sessionStorage.setItem('token', "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE2NTM2NjQ1NzcsImV4cCI6MTY1Mzc1MDk3N30.JaG6Z3MZkG7moiaIXQYClTRHH9EZkgbr-jsDaWe-4s8");
+        // sessionStorage.setItem('token', "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE2NTM2NjQ1NzcsImV4cCI6MTY1Mzc1MDk3N30.JaG6Z3MZkG7moiaIXQYClTRHH9EZkgbr-jsDaWe-4s8");
+        // this.$message({
+        //   message: '恭喜你,登录成功',
+        //   type: 'success'
+        // }); 
+        // this.$router.push('/home') 
+        const { data: res}= await this.$http.post('login', this.ruleForm) ;
+        console.log('登录了吗', res)  
+        sessionStorage.setItem('token', res.data.token);
         this.$message({
           message: '恭喜你,登录成功',
           type: 'success'
-        });  
-        this.$router.push('/home')      
+        }); 
+        this.$router.push('/home')
+    
       })
     },
     resetForm(formName) {
