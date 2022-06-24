@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-card>
@@ -79,8 +79,8 @@
              <el-tooltip class="item" effect="dark" content="删除" placement="top-start" :enterable='false'>
                <el-button type="danger" icon="el-icon-delete" size="small"  @click='deleteUserData(scope.row)' ></el-button>
              </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="设置" placement="top-start" :enterable='false'>
-              <el-button type="warning" icon="el-icon-setting" size="small"></el-button>
+            <el-tooltip class="item" effect="dark" content="分配权限" placement="top-start" :enterable='false'>
+              <el-button type="warning" icon="el-icon-setting" size="small" @click='showAllotRightsDialog(scope)'></el-button>
             </el-tooltip>  
             </div>
           </template>
@@ -99,6 +99,40 @@
     </el-pagination>
 
     </el-card>
+
+    <!--分配权限对话框-->
+    <el-dialog
+      title="分配角色"
+      :visible.sync="allotRightsDialogVisible"
+      width="35%"
+      v-if='currentAllotRightRole'
+    >
+      <div>
+        <span class='allotRightDialogLabel'>当前的用户:</span>
+        <span>{{currentAllotRightRole.username}}</span>
+      </div>
+      <div>
+        <span class='allotRightDialogLabel'>当前的角色:</span>
+        <span>{{currentAllotRightRole.role_name}}</span>
+      </div>
+      <div>
+        <span class='allotRightDialogLabel'>分配新角色:</span>
+        <span>
+          <el-select v-model="roleSelectedId" placeholder="请选择">
+            <el-option
+              v-for="item in roleList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancelAllotRightsHandler">取 消</el-button>
+        <el-button type="primary" @click="sureAllotRightsHandler">确 定</el-button>
+      </span>
+    </el-dialog>
 
   <!--添加用户对话框-->
   <el-dialog
@@ -234,7 +268,27 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { validator: mobileRule, trigger: 'blur' }
         ],
-      }
+      },
+      allotRightsDialogVisible:false,
+      currentAllotRightRole: null,
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      roleSelectedId: '',
+      roleList: []
 
     }
   },
@@ -310,7 +364,6 @@ export default {
       });
     },
     editDialogOpened(currentData){
-      console.log(currentData);
       this.editUserform.username = currentData.username;
       this.editUserform.email = currentData.email;      
       this.editUserform.mobile = currentData.mobile;
@@ -330,7 +383,6 @@ export default {
               email: this.editUserform.email,
               mobile: this.editUserform.mobile
           });
-          console.log(res)
           this.editUserdialogVisible = false;
           if(res.meta.status !== 200) {this.$message.error('修改数据失败'); return}
           this.$message.success('更新数据成功');
@@ -344,7 +396,9 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
       }).then(async () => {
-        const { data: res} = await this.$http.delete('roles/'+ row.id);
+        console.log(row.id)
+        const { data: res} = await this.$http.delete(`roles/${row.id}`);
+        console.log(res);
         if(res.meta.status != 200) return this.$message.info('删除失败');
         this.$message.success('删除成功')
       }).catch(() => {
@@ -353,6 +407,28 @@ export default {
             message: '已取消删除'
           });          
       });
+    },
+    cancelAllotRightsHandler() {
+      this.allotRightsDialogVisible = false;
+    },
+    async sureAllotRightsHandler() {
+      this.allotRightsDialogVisible = false;
+      console.log(this.currentAllotRightRole.id, this.roleSelectedId);
+      // const { data: res} = await this.$http.put(`users/${this.currentAllotRightRole.id}/role`, {
+      //   rids: this.roleSelectedId
+      // })
+      // if(res.meta.status!=200) return this.$message.warning('更新失败');
+      // this.$message.success('更新成功')
+      // this.roleSelectedId = ""
+    },
+    async showAllotRightsDialog(scope) {
+      const { data: res} = await this.$http.get('roles');
+      if(res.meta.status!==200) return this.$message.error('获取信息失败');
+      console.log(res.data);
+      this.roleList = res.data;
+
+      this.allotRightsDialogVisible = true;
+      this.currentAllotRightRole = scope.row;
     }
     
   }
@@ -376,6 +452,10 @@ export default {
   .el-pagination {
     margin: 0px;
     margin-top: 20px;
+  }
+  .allotRightDialogLabel {
+    margin-right: 15px;
+    line-height: 27px;
   }
 }
 </style>
