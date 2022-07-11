@@ -11,4 +11,23 @@ html, body, #app{
   margin: 0;
   min-width: 1366px;
 }
+
+.el-card {
+  margin-top: 20px;
+}
+
+.el-table,.zk-table {
+  margin-top: 20px;
+}
+
+.el-pagination {
+  margin: 0px;
+  margin-top: 20px;
+}
+
+.el-cascader-menu {
+  height: 300px;
+  width: 100%;
+}
+
 </style>

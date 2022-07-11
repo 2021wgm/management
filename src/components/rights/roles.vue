@@ -186,15 +186,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-  .el-breadcrumb {
-    height: 30px;
-    line-height: 30px;
-    font-size: 15px;
-  }
   .el-card {
-    .el-table {
-      margin-top: 20px;
-    }
     .el-col>.el-tag {
       margin: 10px;
     }

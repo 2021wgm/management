@@ -110,7 +110,7 @@ export default {
     overflow: hidden;
     .flexible {
       height: 30px;
-      background-color: #CDCDCD;
+      background-color: #837878;
       display: flex;
       justify-content: center;
       align-items: center;

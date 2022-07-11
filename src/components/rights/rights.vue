@@ -59,7 +59,6 @@ export default {
   methods: {
     async getRightsList() {
       const { data: res} = await this.$http.get(`rights/list`);
-      console.log(res.meta);
       if(res.meta.status !== 200) return  this.$message.warning('获取权限列表数据失败');
       this.rightsTableList = res.data
 
@@ -72,14 +71,5 @@ export default {
 <style lang='less' scoped>
 .rightsContainer {
   height: 100%;
-  .el-breadcrumb {
-    height: 30px;
-    line-height: 30px;
-    font-size: 15px;
-  }
-  .el-table {
-    margin-top: 10px;
-  }
-
 }
 </style>

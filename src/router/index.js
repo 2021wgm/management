@@ -7,7 +7,10 @@ import UserInfo from '../components/userInfo'
 import WelCome from '../components/welCome'
 import Roles from '../components/rights/roles.vue'
 import Rights from '../components/rights/rights.vue'
+import Categories from '../components/goodsManagement/categories'
+import ZkTable from 'vue-table-with-tree-grid'
 
+Vue.use(ZkTable)
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,6 +42,10 @@ const routes = [
       {
         path: '/rights',
         component: Rights
+      },
+      {
+        path: '/categories',
+        component: Categories
       }
     ]
   },

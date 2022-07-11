@@ -288,8 +288,7 @@ export default {
         label: '北京烤鸭'
       }],
       roleSelectedId: '',
-      roleList: []
-
+      roleList: [],
     }
   },
   created() {
@@ -396,9 +395,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
       }).then(async () => {
-        console.log(row.id)
         const { data: res} = await this.$http.delete(`roles/${row.id}`);
-        console.log(res);
         if(res.meta.status != 200) return this.$message.info('删除失败');
         this.$message.success('删除成功')
       }).catch(() => {
@@ -413,7 +410,6 @@ export default {
     },
     async sureAllotRightsHandler() {
       this.allotRightsDialogVisible = false;
-      console.log(this.currentAllotRightRole.id, this.roleSelectedId);
       // const { data: res} = await this.$http.put(`users/${this.currentAllotRightRole.id}/role`, {
       //   rids: this.roleSelectedId
       // })
@@ -424,7 +420,6 @@ export default {
     async showAllotRightsDialog(scope) {
       const { data: res} = await this.$http.get('roles');
       if(res.meta.status!==200) return this.$message.error('获取信息失败');
-      console.log(res.data);
       this.roleList = res.data;
 
       this.allotRightsDialogVisible = true;
@@ -438,21 +433,12 @@ export default {
 <style lang='less' scoped>
 .userInfo-container {
   height: 100%;
-  .el-breadcrumb {
-    height: 30px;
-    line-height: 30px;
-    font-size: 15px;
-  }
   .el-table {
-    margin-top: 20px;
     .item {
       margin: 4px;
     }
   }
-  .el-pagination {
-    margin: 0px;
-    margin-top: 20px;
-  }
+
   .allotRightDialogLabel {
     margin-right: 15px;
     line-height: 27px;
