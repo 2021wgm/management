@@ -72,7 +72,7 @@
         <el-cascader v-model="cateCheckedData" :options="goodsParentList"  @change="handleChange"
          :props="{label:'cat_name',children: 'children',value: 'cat_id',expandTrigger: 'hover',checkStrictly: true}"
          :clearable="true" 
-        ></el-cascader>
+        ></el-cascader> 
       </el-form-item>
     </el-form>
       <span slot="footer" class="dialog-footer">
