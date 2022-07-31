@@ -18,6 +18,8 @@ axios.interceptors.request.use(function(config) {
 import './elementComponent'
 import './assets/font/iconfont.css'
 import './assets/font-menu/iconfont.css'
+import './assets/font2/iconfont.css'
+
 
 Vue.config.productionTip = false
 

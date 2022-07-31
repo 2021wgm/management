@@ -30,4 +30,12 @@ html, body, #app{
   width: 100%;
 }
 
+.el-table__expanded-cell {
+  padding-left: 45px!important;
+  .el-tag {
+    margin-right: 10px;
+  }
+}
+
+
 </style>

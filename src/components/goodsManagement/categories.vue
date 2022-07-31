@@ -202,12 +202,10 @@ export default {
       const { data: res} = await this.$http.post('categories', 
           this.addCateQueryInfo
       )
-      console.log(res)
       if(res.meta.status !== 200) return this.$message.error('获取数据失败');
       this.goodsCateData = res.data;
     },
     async handleChange(value) { 
-      console.log(value)     
       this.addCateQueryInfo.cat_level = value.length;
       this.addCateQueryInfo.cat_pid = value[value.length - 1];
     },
@@ -217,7 +215,6 @@ export default {
       });
       if(res.meta.status!=200) return this.$message.warning('获取分类父级数据失败');
       this.goodsParentList = res.data;
-      console.log(this.goodsParentList)
     },
     handleClose() {
       this.addCateQueryInfo.cat_pid = 0;

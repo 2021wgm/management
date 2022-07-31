@@ -28,7 +28,9 @@ import { Button,
          Select,
          Option,
          Result,
-         Cascader
+         Cascader,
+         Tabs,
+         TabPane
        } from 'element-ui'
 
 Vue.use(Button)
@@ -59,6 +61,9 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Result)
 Vue.use(Cascader)
+Vue.use(Tabs)
+Vue.use(TabPane)
+
 
 // Vue.use(Message)
 // Vue.use(MessageBox)
