@@ -50,7 +50,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="cateListInfo.pagenum"
-      :page-sizes="[3, 6, 9, 12]"
+      :page-sizes="[3, 6, 9]"
       :page-size="3"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">

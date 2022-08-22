@@ -9,6 +9,8 @@ import Roles from '../components/rights/roles.vue'
 import Rights from '../components/rights/rights.vue'
 import Categories from '../components/goodsManagement/categories'
 import Goods_params from '../components/goodsManagement/goods_params'
+import Goods_list from '../components/goodsManagement/goods_list'
+import AddGoods from '../components/goodsManagement/addFoods'
 
 import ZkTable from 'vue-table-with-tree-grid'
 
@@ -52,7 +54,17 @@ const routes = [
       {
         path: '/params',
         component: Goods_params
-      }
+      },
+      {
+        path: '/goods',
+        component: Goods_list,
+      },
+      {
+        path: '/goods/addGoods',
+        component: AddGoods,
+      },
+
+
     ]
   },
 ]
@@ -60,6 +72,13 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+
+// const originalPush = router.prototype.push
+// //修改原型对象中的push方法
+// router.prototype.push = function push(location) {
+//    return originalPush.call(this, location).catch(err => err)
+// }
 
 router.beforeEach((to, from, next) => {
   if(to.path === '/login') {

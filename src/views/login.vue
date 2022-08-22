@@ -81,7 +81,13 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    }
+    },
+    getId() {
+    },
+  },
+  created() {
+    console.log(this,2)
+    this.getId();
   }
 }
 </script>
