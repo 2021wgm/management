@@ -11,6 +11,7 @@ import Categories from '../components/goodsManagement/categories'
 import Goods_params from '../components/goodsManagement/goods_params'
 import Goods_list from '../components/goodsManagement/goods_list'
 import AddGoods from '../components/goodsManagement/addFoods'
+import Report from '../components/report'
 
 import ZkTable from 'vue-table-with-tree-grid'
 
@@ -63,6 +64,11 @@ const routes = [
         path: '/goods/addGoods',
         component: AddGoods,
       },
+      {
+        path: '/reports',
+        component: Report,
+      },
+
 
 
     ]
