@@ -6,9 +6,9 @@ import axios from 'axios'
 import VueQuillEditor from 'vue-quill-editor'
 import NProgress from 'vue-nprogress'
 
-// import 'quill/dist/quill.core.css'
-// import 'quill/dist/quill.snow.css'
-// import 'quill/dist/quill.bubble.css'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
 Vue.use(NProgress)
 const nprogress = new NProgress()

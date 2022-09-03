@@ -1,18 +1,5 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Login from '../views/login'
-import Home from '../views/home'
-// import UserInfo from '../components/userInfo.vue'
-import UserInfo from '../components/userInfo'
-import WelCome from '../components/welCome'
-import Roles from '../components/rights/roles.vue'
-import Rights from '../components/rights/rights.vue'
-import Categories from '../components/goodsManagement/categories'
-import Goods_params from '../components/goodsManagement/goods_params'
-import Goods_list from '../components/goodsManagement/goods_list'
-import AddGoods from '../components/goodsManagement/addFoods'
-import Report from '../components/report'
-
+// import VueRouter from 'vue-router'
 import ZkTable from 'vue-table-with-tree-grid'
 
 Vue.use(ZkTable)
@@ -25,52 +12,49 @@ const routes = [
   },
   {
     path: '/login',
-    component: Login
+    component: resolve => require(['../views/login'],resolve)
   },
   {
     path: '/home',
-    component: Home,
+    component:resolve => require(['../views/home'],resolve),
     redirect: '/welcome',
     children: [
       {
         path: '/welCome',
-        component: WelCome
+        component: resolve => require(['../components/welCome'],resolve)
       },
       {
         path: '/users',
-        component: UserInfo
+        component: resolve => require(['../components/userInfo'],resolve)
       },
       {
         path: '/roles',
-        component: Roles
+        component: resolve => require(['../components/rights/roles'],resolve)
       },
       {
         path: '/rights',
-        component: Rights
+        component: resolve => require(['../components/rights/rights'],resolve)
       },
       {
         path: '/categories',
-        component: Categories
+        component: resolve => require(['../components/goodsManagement/categories'],resolve)
       },
       {
         path: '/params',
-        component: Goods_params
+        component:  resolve => require(['../components/goodsManagement/goods_params'],resolve)
       },
       {
         path: '/goods',
-        component: Goods_list,
+        component:  resolve => require(['../components/goodsManagement/goods_list'],resolve),
       },
       {
         path: '/goods/addGoods',
-        component: AddGoods,
+        component:  resolve => require(['../components/goodsManagement/addFoods'],resolve),
       },
       {
         path: '/reports',
-        component: Report,
+        component:  resolve => require(['../components/report'],resolve),
       },
-
-
-
     ]
   },
 ]
@@ -79,6 +63,18 @@ const router = new VueRouter({
   routes
 })
 
+const originalPush = VueRouter.prototype.push
+const originalReplace = VueRouter.prototype.replace
+// push
+VueRouter.prototype.push = function push (location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
+// replace
+VueRouter.prototype.replace = function push (location, onResolve, onReject) {
+  if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
+  return originalReplace.call(this, location).catch(err => err)
+}
 
 // const originalPush = router.prototype.push
 // //修改原型对象中的push方法
@@ -98,7 +94,5 @@ router.beforeEach((to, from, next) => {
       }  
   }
 })
-
-
 
 export default router
